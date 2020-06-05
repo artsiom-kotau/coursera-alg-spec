@@ -4,12 +4,21 @@ from collections import namedtuple
 
 Segment = namedtuple('Segment', 'start end')
 
+
+def sort_key(x):
+    return x.end
+
+
 def optimal_points(segments):
     points = []
-    #write your code here
-    for s in segments:
-        points.append(s.start)
-        points.append(s.end)
+    segments.sort(key=sort_key)
+    point = segments[0].end
+    points.append(point)
+
+    for i in range(1, len(segments)):
+        if segments[i].start > point or segments[i].end < point:
+            point = segments[i].end
+            points.append(point)
     return points
 
 if __name__ == '__main__':
